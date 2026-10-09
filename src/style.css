@@ -1,0 +1,256 @@
+/* ============ 聆一 ListenOne 设计系统 · 小清新「宣纸 × 松石」 ============ */
+
+:root {
+  --bg: #f4f1e8;
+  --bg-soft: #ece8db;
+  --surface: #fffdf8;
+  --line: #e3ded0;
+  --line-strong: #d3cdba;
+  --ink: #23221c;
+  --ink-2: #6e6a5c;
+  --ink-3: #a09a8b;
+  --jade: #147c5a;
+  --jade-deep: #0c5340;
+  --jade-mist: #e3efe7;
+  --coral: #ff6b4a;
+  --coral-soft: #ffe9e2;
+  --gold: #e8a33d;
+  --radius: 16px;
+  --radius-lg: 22px;
+  --shadow-1: 0 2px 10px rgba(35, 34, 28, 0.05);
+  --shadow-2: 0 14px 36px rgba(35, 34, 28, 0.13);
+  --font-display: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+  --font-body: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* 纸纹噪点 + 顶部氛围光 */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.14 0 0 0 0 0.14 0 0 0 0 0.11 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(560px 300px at -60px -80px, rgba(20, 124, 90, 0.09), transparent 70%),
+    radial-gradient(520px 320px at 108% 4%, rgba(255, 107, 74, 0.07), transparent 70%);
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+input {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background: none;
+  color: inherit;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============ 通用组件类 ============ */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-1);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--jade-deep);
+  color: #f6f3ea;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.btn-primary:hover {
+  background: var(--jade);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(12, 83, 64, 0.28);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 13px;
+  color: var(--ink-2);
+  background: var(--surface);
+  transition: all 0.18s ease;
+}
+.btn-ghost:hover {
+  color: var(--jade-deep);
+  border-color: var(--jade);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.section-title small {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--ink-3);
+  letter-spacing: 0.08em;
+}
+
+/* 播放中音波动画 */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 13px;
+}
+.eq i {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--jade);
+  animation: eq-bounce 0.9s ease-in-out infinite;
+}
+.eq i:nth-child(2) {
+  animation-delay: 0.25s;
+  animation-duration: 0.7s;
+}
+.eq i:nth-child(3) {
+  animation-delay: 0.5s;
+  animation-duration: 1.1s;
+}
+.eq.paused i {
+  animation-play-state: paused;
+  opacity: 0.45;
+}
+@keyframes eq-bounce {
+  0%,
+  100% {
+    height: 4px;
+  }
+  50% {
+    height: 13px;
+  }
+}
+
+/* 页面切换动效 */
+.page-enter-active {
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-leave-active {
+  transition: opacity 0.15s ease;
+}
+.page-leave-to {
+  opacity: 0;
+}
+
+/* 列表交错浮现 */
+.stagger > * {
+  animation: rise-in 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.skeleton {
+  background: linear-gradient(100deg, var(--bg-soft) 40%, #f7f4ec 50%, var(--bg-soft) 60%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 10px;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.empty-hint {
+  text-align: center;
+  color: var(--ink-3);
+  padding: 60px 0;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}

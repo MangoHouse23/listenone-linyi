@@ -1,0 +1,23 @@
+{
+  "name": "listenone-linyi",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "聆一 ListenOne — 基于 Listen 1 思路的多平台聚合音乐播放器",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "pinia": "^3.0.3",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.11",
+    "vue-tsc": "^3.1.3"
+  }
+}
